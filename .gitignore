@@ -33,3 +33,16 @@ pnpm-debug.log*
 # Build
 dist
 build
+
+.env
+.env.*
+!.env.example
+
+node_modules/
+.next/
+out/
+dist/
+.vercel/
+
+supabase/.temp/
+ .env.local

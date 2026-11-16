@@ -35,15 +35,22 @@ export function StationDetail({
   slots = [],
   onBookClick,
 }: StationDetailProps) {
-  const todaySlots = useMemo(() => {
-    const today = new Date().toDateString()
-    return slots
-      .filter((s) => new Date(s.start_time).toDateString() === today)
-      .sort(
-        (a, b) =>
-          new Date(a.start_time).getTime() - new Date(b.start_time).getTime(),
-      )
-  }, [slots])
+ const todaySlots = useMemo(() => {
+  const now = new Date()
+
+  return slots
+    .filter(
+      (s) =>
+        s.status === "available" &&
+        new Date(s.start_time) > now &&
+        new Date(s.start_time).toDateString() === now.toDateString(),
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.start_time).getTime() -
+        new Date(b.start_time).getTime(),
+    )
+}, [slots])
 
   return (
     <div className="space-y-6">
@@ -73,7 +80,7 @@ export function StationDetail({
       <div className="flex flex-wrap gap-2">
         <Badge variant="secondary" className="flex items-center gap-1.5">
           <Zap className="h-3.5 w-3.5" />
-          {station.power_kw} kW
+          ₹{station.power_kw} kW
         </Badge>
         {station.connector_types.map((c) => (
           <ConnectorBadge key={c} type={c} />
@@ -105,7 +112,7 @@ export function StationDetail({
         <div>
           <p className="text-sm text-text-muted">Price</p>
           <p className="font-mono text-xl tabular-nums text-accent">
-            ${station.price_per_kwh.toFixed(2)}
+            ₹{station.price_per_kwh.toFixed(2)}
             <span className="text-base font-normal text-text-muted">/kWh</span>
           </p>
         </div>

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { createClient } from "@/lib/supabase/client"
 import type { Station } from "@/types"
 
-const DEFAULT_CENTER = { lat: 40.7484, lng: -73.9857 }
+const DEFAULT_CENTER = { lat: 12.9716, lng: 77.5946 }
 
 interface UseNearbyStationsOptions {
   latitude?: number | null

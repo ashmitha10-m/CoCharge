@@ -1,5 +1,5 @@
 "use client"
-
+import type { Feature, Point } from "geojson"
 import { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { Zap } from "lucide-react"
@@ -13,8 +13,9 @@ interface StationMarkerProps {
 }
 
 export function StationMarker({ feature, onClick, isActive, isCharging }: StationMarkerProps) {
-  const markerRef = useRef<HTMLDivElement>(null)
-  const coordinates = (feature.geometry as GeoJSON.Point).coordinates.slice()
+ const markerRef = useRef<HTMLDivElement>(null)
+const geoJsonFeature = feature as unknown as Feature<Point>
+const coordinates = geoJsonFeature.geometry.coordinates.slice()
   const { id, name, status } = feature.properties ?? {}
 
   const isAvailable = status === "active" || status === "available"

@@ -1,3 +1,4 @@
+
 export type UserRole = "driver" | "host" | "admin"
 
 export interface Profile {
@@ -8,7 +9,6 @@ export interface Profile {
   vehicle_make: string | null
   vehicle_model: string | null
   vehicle_year: number | null
-  stripe_customer_id: string | null
   created_at: string
 }
 
@@ -36,7 +36,12 @@ export interface Station {
   created_at: string
 }
 
-export type SlotStatus = "available" | "booked" | "charging" | "completed"
+export type SlotStatus =
+  | "available"
+  | "pending"
+  | "booked"
+  | "charging"
+  | "completed"
 
 export interface Slot {
   id: string
@@ -44,6 +49,7 @@ export interface Slot {
   start_time: string
   end_time: string
   status: SlotStatus
+  reserved_until?: string | null
   created_at: string
 }
 
@@ -60,8 +66,10 @@ export interface Booking {
   driver_id: string
   slot_id: string
   station_id: string
-  stripe_session_id: string | null
-  stripe_payment_intent_id: string | null
+
+  razorpay_order_id?: string | null
+  razorpay_payment_id?: string | null
+
   amount_cents: number
   kwh_delivered: number | null
   status: BookingStatus

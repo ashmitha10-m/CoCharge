@@ -19,8 +19,8 @@ export function StationCard({ station, distance, onClick, className }: StationCa
   const isAvailable = station.status === "active"
   const powerLabel =
     station.power_kw >= 50
-      ? `${station.power_kw} kW DC Fast`
-      : `${station.power_kw} kW`
+      ? `₹{station.power_kw} kW DC Fast`
+      : `₹{station.power_kw} kW`
 
   return (
     <motion.div
@@ -60,7 +60,7 @@ export function StationCard({ station, distance, onClick, className }: StationCa
             )}
           </div>
           <div className="text-right font-mono tabular-nums text-accent">
-            ${station.price_per_kwh.toFixed(2)}
+            ₹{station.price_per_kwh.toFixed(2)}
             <span className="text-text-muted">/kWh</span>
           </div>
         </div>

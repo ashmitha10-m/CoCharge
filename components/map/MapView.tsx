@@ -27,7 +27,49 @@ export function MapView({
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<mapboxgl.Map | null>(null)
   const markersRef = useRef<mapboxgl.Marker[]>([])
+  const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
+
+  const handleLocate = () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser.")
+    return
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords
+
+      const map = mapInstanceRef.current
+      if (!map) return
+
+      map.flyTo({
+        center: [longitude, latitude],
+        zoom: 15,
+        duration: 1200,
+      })
+
+      if (userMarkerRef.current) {
+        userMarkerRef.current.setLngLat([longitude, latitude])
+      } else {
+        userMarkerRef.current = new mapboxgl.Marker({
+          color: "#22d3ee",
+        })
+          .setLngLat([longitude, latitude])
+          .addTo(map)
+      }
+    },
+    (error) => {
+      console.error("Location error:", error)
+      alert("Unable to get your location. Please allow location access in your browser.")
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0,
+    }
+  )
+}
 
   useEffect(() => {
     if (!mapRef.current || !process.env.NEXT_PUBLIC_MAPBOX_TOKEN) return
@@ -35,13 +77,21 @@ export function MapView({
     const map = new mapboxgl.Map({
       container: mapRef.current,
       style: "mapbox://styles/mapbox/dark-v11",
-      center: [-73.9857, 40.7484],
+      center: [77.5946, 12.9716],
       zoom: 12,
     })
 
     map.addControl(new mapboxgl.NavigationControl(), "top-right")
 
-    map.on("load", () => setMapLoaded(true))
+map.on("load", () => {
+  console.log("Mapbox map loaded successfully")
+  map.resize()
+  setMapLoaded(true)
+})
+
+map.on("error", (event) => {
+  console.error("Mapbox error:", event.error)
+})
 
     mapInstanceRef.current = map
     return () => {
@@ -102,10 +152,13 @@ export function MapView({
     })
   }, [userLocation])
 
-  return (
-    <div className={cn("relative h-full w-full", className)}>
-      <div ref={mapRef} className="absolute inset-0" />
-      <MapControls onLocate={() => {}} />
-    </div>
-  )
+return (
+  <div className={cn("relative h-full w-full min-h-[500px]", className)}>
+    <div
+      ref={mapRef}
+      className="absolute inset-0 h-full w-full"
+    />
+    <MapControls onLocate={handleLocate} />
+  </div>
+)
 }

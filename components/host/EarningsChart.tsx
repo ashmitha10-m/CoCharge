@@ -53,7 +53,7 @@ export function EarningsChart({ data, className }: EarningsChartProps) {
             fontSize={12}
             tickLine={false}
             axisLine={false}
-            tickFormatter={(v) => `$${v}`}
+            tickFormatter={(v) => `₹${v}`}
           />
           <Tooltip
             contentStyle={{
@@ -62,7 +62,7 @@ export function EarningsChart({ data, className }: EarningsChartProps) {
               borderRadius: "8px",
             }}
             labelStyle={{ color: "var(--text-primary)" }}
-            formatter={(value: number) => [`$${value.toFixed(2)}`, "Earnings"]}
+            formatter={(value) => `₹${Number(value).toFixed(2)}`}
           />
           <Area
             type="monotone"

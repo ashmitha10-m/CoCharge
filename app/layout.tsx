@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/Toaster"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "ZAPD — P2P EV Charging Marketplace",
+  title: " CoCharge— P2P EV Charging Marketplace",
   description:
     "Find nearby charging stations, book time slots, and charge your EV — frictionless, fast, dark-mode-first.",
 }

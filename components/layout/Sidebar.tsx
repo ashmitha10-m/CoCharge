@@ -30,7 +30,7 @@ export function Sidebar() {
           <div className="size-8 rounded-lg bg-accent/20 flex items-center justify-center">
             <Zap className="size-4 text-accent" />
           </div>
-          <span className="font-semibold text-text-primary">ZAPD</span>
+          <span className="font-semibold text-text-primary">CoCharge</span>
         </div>
       </div>
       <nav className="flex-1 p-4 space-y-1">

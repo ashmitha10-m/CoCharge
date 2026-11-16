@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Sign in | ZAPD",
-  description: "Sign in to ZAPD — P2P EV Charging Marketplace",
+  title: "Sign in | CoCharge",
+  description: "Sign in to CoCharge — P2P EV Charging Marketplace",
 }
 
 export default function AuthLayout({

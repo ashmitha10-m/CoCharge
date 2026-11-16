@@ -1,5 +1,5 @@
 "use client"
-
+import { motion } from "framer-motion"
 import * as Dialog from "@radix-ui/react-dialog"
 import { m, useReducedMotion } from "framer-motion"
 import { type ComponentPropsWithoutRef, type ElementRef, forwardRef } from "react"

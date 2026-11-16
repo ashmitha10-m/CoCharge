@@ -25,6 +25,5 @@ for label in "bug" "enhancement" "documentation" "performance" "good first issue
 done
 
 # Add repo topics
-gh repo edit --add-topic ev-charging --add-topic nextjs --add-topic supabase --add-topic stripe --add-topic mapbox --add-topic typescript 2>/dev/null || echo "Topics may already exist"
-
+gh repo edit --add-topic ev-charging --add-topic nextjs --add-topic supabase --add-topic mapbox --add-topic typescript 2>/dev/null || echo "Topics may already exist"
 echo "✓ GitHub repository initialized"

@@ -1,6 +1,8 @@
+
 "use client"
 
 import { Suspense, useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { MapView } from "@/components/map/MapView"
 import { StationCard } from "@/components/station/StationCard"
@@ -11,14 +13,18 @@ function StationListSkeleton() {
   return (
     <div className="space-y-3 p-4">
       {[1, 2, 3].map((i) => (
-        <Skeleton key={i} className="h-32 w-full rounded-xl" />
+        <Skeleton
+          key={i}
+          className="h-32 w-full rounded-xl"
+        />
       ))}
     </div>
   )
 }
 
 function SearchBar() {
-  const [connectorFilter, setConnectorFilter] = useState<string>("all")
+  const [connectorFilter, setConnectorFilter] =
+    useState<string>("all")
 
   return (
     <motion.div
@@ -49,12 +55,19 @@ function SearchBar() {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
   const { data: stations, isLoading } = useNearbyStations()
+
+  const handleStationClick = (stationId: string) => {
+    router.push(`/stations/${stationId}`)
+  }
 
   return (
     <div className="relative h-[calc(100vh-64px)] w-full">
       <MapView stations={stations ?? []} />
+
       <SearchBar />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -62,11 +75,15 @@ export default function DashboardPage() {
         className="absolute bottom-0 left-0 right-0 z-10 max-h-[45vh] overflow-hidden rounded-t-2xl border-t border-border bg-surface/95 backdrop-blur-xl md:left-auto md:right-4 md:top-1/2 md:bottom-auto md:max-h-[calc(100%-8rem)] md:w-96 md:-translate-y-1/2 md:rounded-2xl"
       >
         <div className="flex items-center justify-between border-b border-border-subtle p-4">
-          <h2 className="text-lg font-semibold">Nearby Stations</h2>
+          <h2 className="text-lg font-semibold">
+            Nearby Stations
+          </h2>
+
           <span className="text-sm text-text-muted">
             {stations?.length ?? 0} available
           </span>
         </div>
+
         <div className="max-h-[35vh] overflow-y-auto md:max-h-[calc(100%-5rem)]">
           <Suspense fallback={<StationListSkeleton />}>
             {isLoading ? (
@@ -80,14 +97,21 @@ export default function DashboardPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.05 * i }}
                   >
-                    <StationCard station={station} />
+                    <StationCard
+                      station={station}
+                      onClick={() =>
+                        handleStationClick(station.id)
+                      }
+                    />
                   </motion.div>
                 ))}
-                {(!stations || stations.length === 0) && !isLoading && (
-                  <p className="py-8 text-center text-text-muted">
-                    No stations found nearby
-                  </p>
-                )}
+
+                {(!stations || stations.length === 0) &&
+                  !isLoading && (
+                    <p className="py-8 text-center text-text-muted">
+                      No stations found nearby
+                    </p>
+                  )}
               </div>
             )}
           </Suspense>

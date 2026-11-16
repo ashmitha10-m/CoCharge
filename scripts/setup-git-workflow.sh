@@ -14,7 +14,7 @@ COMMITS=(
   "feat(map): add Mapbox map view with station markers and controls"
   "feat(dashboard): add dashboard with nearby stations and layout"
   "feat(station): add station card, grid, detail, and booking modal"
-  "feat(booking): add Stripe checkout and webhook for payments"
+  "feat(booking): add Razorpay checkout and payment verification"
   "feat(bookings): add bookings list and booking detail pages"
   "feat(host): add host dashboard, station management, and earnings chart"
   "feat(session): add live session card and timeline components"

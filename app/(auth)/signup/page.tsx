@@ -88,7 +88,7 @@ export default function SignupPage() {
         Create an account
       </h1>
       <p className="text-text-secondary mb-8">
-        Join ZAPD to find charging stations or list your own.
+        Join CoCharge to find charging stations or list your own.
       </p>
 
       <Button
