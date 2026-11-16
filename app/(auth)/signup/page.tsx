@@ -33,7 +33,7 @@ export default function SignupPage() {
       password: data.password,
       options: {
         data: { full_name: data.fullName },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/callback`,
       },
     })
     if (error) {
@@ -47,7 +47,7 @@ export default function SignupPage() {
     setError(null)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: `${window.location.origin}/callback` },
     })
     if (error) {
       setError(error.message)
